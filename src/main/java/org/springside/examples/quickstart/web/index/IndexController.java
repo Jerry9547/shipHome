@@ -26,4 +26,8 @@ public class IndexController {
 	public String aboutUs() {
 		return "index/aboutUs";
 	}
+	@RequestMapping(value="profile",method = RequestMethod.GET)
+	public String profile() {
+		return "index/profile";
+	}
 }

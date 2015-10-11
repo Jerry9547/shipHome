@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="right">
-                    <h3><span>这边有一个货舱的船上用品需要出售，价格优可到货舱看货</span> <a class="btn-look" href="">查看详情</a></h3>
+                    <h3><span>这边有一个货舱的船上用品需要出售，价格优可到货舱看货</span> <a class="btn-look" href="${ctx}/info/detail">查看详情</a></h3>
                     <ul class="list">
                         <li>
                             <a href="">
@@ -60,7 +60,7 @@
 
                     </ul>
                     <div class="tc mt20">
-                        <a href="" class="btn-more">查看更多资讯 ></a>
+                        <a href="${ctx}/info/list" class="btn-more">查看更多资讯 ></a>
                     </div>
                 </div>
             </div>

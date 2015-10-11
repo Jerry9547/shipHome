@@ -1,65 +1,31 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-
-<html>
-<head>
-	<title>用户注册</title>
-	
-	<script>
-		$(document).ready(function() {
-			//聚焦第一个输入框
-			$("#loginName").focus();
-			//为inputForm注册validate函数
-			$("#inputForm").validate({
-				rules: {
-					loginName: {
-						remote: "${ctx}/register/checkLoginName"
-					}
-				},
-				messages: {
-					loginName: {
-						remote: "用户登录名已存在"
-					}
-				}
-			});
-		});
-	</script>
-</head>
-
 <body>
-	<form id="inputForm" action="${ctx}/register" method="post" class="form-horizontal">
-		<fieldset>
-			<legend><small>用户注册</small></legend>
-			<div class="control-group">
-				<label for="loginName" class="control-label">登录名:</label>
-				<div class="controls">
-					<input type="text" id="loginName" name="loginName" class="input-large required" minlength="3"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label for="name" class="control-label">用户名:</label>
-				<div class="controls">
-					<input type="text" id="name" name="name" class="input-large required"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label for="plainPassword" class="control-label">密码:</label>
-				<div class="controls">
-					<input type="password" id="plainPassword" name="plainPassword" class="input-large required"/>
-				</div>
-			</div>
-			<div class="control-group">
-				<label for="confirmPassword" class="control-label">确认密码:</label>
-				<div class="controls">
-					<input type="password" id="confirmPassword" name="confirmPassword" class="input-large required" equalTo="#plainPassword"/>
-				</div>
-			</div>
-			<div class="form-actions">
-				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交"/>&nbsp;	
-				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
-			</div>
-		</fieldset>
-	</form>
+<div class="user-box-item" id="register">
+    <form action="" class="clear">
+        <div class="hd clear">
+            <a href="javascript:void(0)" class="c_999 go-link go-login">已有账号？去登录</a>
+            <h3>注册</h3>
+            <div class="in-item user-icon icon-user">
+                <input type="text" placeholder="请输入用户名/手机"/>
+            </div>
+            <a href="javascript:void(0)" class="gray-btn getCode">获取验证码</a>
+            <div class="in-item user-icon icon-phone small">
+                <input type="text" placeholder="请输入手机号"/>
+            </div>
+            <div class="in-item user-icon icon-check small">
+                <input type="text" placeholder="请输入验证码"/>
+            </div>
+            <div class="in-item">
+                <input type="password" placeholder="请输入船舶名称（选填）"/>
+            </div>
+            <div class="in-item">
+                <input type="password" placeholder="请输入船舶编号（选填）"/>
+            </div>
+            <p class="c_999" style="margin-top: -10px">注册即同意 <a href="${ctx}/index/profile" class="c_theme go-agree">《航运宝协议》</a></p>
+        </div>
+        <a href="" class="btn-user">注册</a>
+    </form>
+</div>
 </body>
-</html>
