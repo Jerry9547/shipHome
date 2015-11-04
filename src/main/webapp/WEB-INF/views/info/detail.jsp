@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="/WEB-INF/tlds/comm.tld" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <body>
     <div id="content">
@@ -17,51 +18,58 @@
                 <div class="bd">
                     <div class="tempWrap">
                         <ul>
+                        <c:forEach items="${info.photoArr }" var="photo" varStatus="status">
+                            <li><a href="javascript:void(0);"><img src="${photo }" style="width:446px;height:342px;" onerror="javascript:this.src='${ctx}/static/images/photo/show-img02.jpg';"></a></li>
+                        </c:forEach>
+                            <%-- <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
                             <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
                             <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
                             <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
                             <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
                             <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
-                            <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
-                            <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
-                            <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li>
+                            <li><a href="javascript:void(0);"><img src="${ctx}/static/images/photo/show-img01.jpg"></a></li> --%>
                         </ul>
                     </div>
                 </div>
                 <div class="hd little-img">
                     <ul class="clear">
+                    <c:forEach items="${info.photoArr }" var="photo" varStatus="status">
+                        <li class=""><img src="${photo }" style="width: 109px;height: 65px;" onerror="javascript:this.src='${ctx}/static/images/photo/show-img02.jpg';"></li>
+                    </c:forEach>
+                       <%--  <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
                         <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
                         <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
                         <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
                         <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
                         <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
-                        <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
-                        <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
-                        <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li>
+                        <li class=""><img src="${ctx}/static/images/photo/show-img01.jpg"></li> --%>
                     </ul>
                 </div>
                 <span class="prev clickObj"><em class="icon"></em></span>
                 <span class="next clickObj"><em class="icon"></em></span>
             </div>
             <div class="right-con fr">
-                <h1>这边有一个货舱的船上用品需要出售，价格优可到货舱看货</h1>
+                <h1>${info.title }</h1>
                 <p class="time-eyes">
                     <span class="time icon"></span>
-                    <span>发布时间：7天前发布</span>
+                    <span>发布时间：${fn:getDateDiff(info.createTime,"yyyy-MM-dd HH:mm:ss") }发布</span>
                     <span class="eyes icon"></span>
-                    <span>浏览人数：335人</span>
+                    <span>浏览人数：${info.reviewCount }人</span>
                 </p>
-                <p>价格：<strong>3000</strong>元起</p>
-                <p>地点：上海</p>
-                <p>类型：石子</p>
-                <p>联系人：张先生</p>
-                <p>联系电话：<strong>15221038689</strong></p>
+                <p style="display:inline-block;">价格：<strong>${info.price }</strong>元起</p>
+                <c:if test="${info.userId==user.id }">
+                	<a href="${ctx }/info/update/${info.id }" style="display:inline-block;float:right;margin-top: 32px;"><span class="glyphicon glyphicon-edit">修改</span></a>
+                </c:if>
+                <p>地点：${info.address }</p>
+                <p>类型：${info.infoType.type } > ${info.infoTypeOne.infoTypeOne } > ${info.infoTypeTwo.infoTypeTwo }</p>
+                <p>联系人：${info.linkman }</p>
+                <p>联系电话：<strong>${info.phone }</strong></p>
             </div>
         </div>
         <div class="details-list box-sizing mt0 w1000">
             <h1>描述</h1>
             <pre>
-                <p>文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文啊所发生发送到发射点发送法撒旦法撒旦发射点发射点发射点发送法撒旦发射点发首发身份本文本文本文本文本文本文本文本文本文本文本文本文本文本</p></pre>
+                <p>${info.descri }</p></pre>
         </div>
     </div>
     <script type="text/javascript">

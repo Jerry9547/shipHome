@@ -37,7 +37,7 @@ public class UserAdminController {
 	public String list(Model model) {
 		List<User> users = accountService.getAllUser();
 		model.addAttribute("users", users);
-
+		
 		return "account/adminUserList";
 	}
 
@@ -54,6 +54,7 @@ public class UserAdminController {
 		return "redirect:/admin/user";
 	}
 
+	
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 		User user = accountService.getUser(id);

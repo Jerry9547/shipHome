@@ -1,0 +1,6 @@
+org\springside\examples\quickstart\QuickStartServer.class
+org\springside\examples\quickstart\service\account\AccountServiceTest.class
+org\springside\examples\quickstart\data\UserData.class
+org\springside\examples\quickstart\repository\JpaMappingTest.class
+org\springside\examples\quickstart\data\TaskData.class
+org\springside\examples\quickstart\repository\TaskDaoTest.class

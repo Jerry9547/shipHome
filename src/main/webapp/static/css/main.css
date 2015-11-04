@@ -112,7 +112,7 @@ Basic Swiper Styles
 
 .index-main .news{padding: 20px 0;}
 .index-main .news .left{float: left;width: 500px}
-.index-main .news .left li{float: left;width: 230px;height: 170px;margin-right: 20px;position: relative;overflow: hidden}
+.index-main .news .left li{float: left;width: 230px;height: 170px;margin-right: 20px;position: relative;overflow: hidden; margin-top:8px;}
 .index-main .news .left .more{position: absolute;width: 100%;height:100%;top: 100%;-webkit-transition:.5s;transition:.5s;background: rgba(0, 132, 255, 0.71)
 }
 .index-main .news .left .more div{padding: 0 20px}
@@ -138,6 +138,7 @@ Basic Swiper Styles
 .user-box-item .hd .in-item.small{width: 228px}
 .user-box-item .hd .gray-btn{float: right;padding: 15px 20px;border-radius: 4px;background: #ccc;color: #fff}
 .user-box-item .hd .gray-btn:hover{background: #ddd}
+.gray-btn-active{background:#0084ff}
 
 .user-box-item .hd .user-icon:before{content:"";position: absolute;background: url(../images/icon/icon-bg.png) no-repeat;width: 18px;height: 22px;top: 12px;left: 15px;}
 .user-box-item .hd .icon-user:before{background-position:-7px -6px;}
@@ -214,6 +215,7 @@ Basic Swiper Styles
 .commodity-list .img-list li + li{margin-top: 20px;}
 .commodity-list .img-list li > img{width:100%;vertical-align: middle;}
 .commodity-list .img-list li > p{position:absolute;bottom:0;left:0;width:100%;height: 40px;padding:0 5px 0 10px;line-height: 40px;background-color:rgba(0,0,0,.52);color:#fff;}
+.commodity-list .img-list li > a >  p{position:absolute;bottom:0;left:0;width:100%;height: 40px;padding:0 5px 0 10px;line-height: 40px;background-color:rgba(0,0,0,.52);color:#fff;}
 .commodity-list .paging{margin-top:20px;}
 
 /*发布资讯*/
@@ -314,6 +316,50 @@ Basic Swiper Styles
 .details-module .right-con p{margin-top:22px;font-size: 16px;color:#575757;}
 .details-module .right-con p strong{position:relative;top:2px;padding-right:5px;line-height:28px;font-size: 28px;font-weight:normal;color:#44a5ff;}
 
+.none{display:none;}
+.nowrap{ text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.tcdPageCode {
+padding: 15px 20px;
+text-align: left;
+color: #ccc;
+text-align: center;
+}
+.tcdPageCode span.disabled {
+display: inline-block;
+height: 25px;
+line-height: 25px;
+padding: 0 10px;
+margin: 0 2px;
+color: #bfbfbf;
+background: #f2f2f2;
+border: 1px solid #bfbfbf;
+border-radius: 4px;
+vertical-align: middle;
+}
+.tcdPageCode span.current {
+display: inline-block;
+height: 25px;
+line-height: 25px;
+padding: 0 10px;
+margin: 0 2px;
+color: #fff;
+background-color: #0086ff;
+border: 1px solid #0086ff;
+border-radius: 4px;
+vertical-align: middle;
+}
+.tcdPageCode a {
+display: inline-block;
+color: #428bca;
+display: inline-block;
+height: 25px;
+line-height: 25px;
+padding: 0 10px;
+border: 1px solid #ddd;
+margin: 0 2px;
+border-radius: 4px;
+vertical-align: middle;
+}
 
 
 
