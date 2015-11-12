@@ -6,6 +6,7 @@
 <div class="user-box-item" id="register">
     <form action="register/save" id="register_form" class="clear" method="post" >
         <div class="hd clear">
+        	<a href="${ctx}/info/list?userId=${user.id }" class="c_999 go-link go-login mb10">我的资讯</a>
             <div class="in-item user-icon icon-user">
                 <input type="text" name="userName" id="name" maxlength="30" readonly placeholder="请输入用户名" value="${user.userName }"/>
             </div>

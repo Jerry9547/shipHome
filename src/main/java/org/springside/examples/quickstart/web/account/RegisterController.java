@@ -82,35 +82,41 @@ public class RegisterController {
 			writer = response.getWriter();
 			if(user!=null){
 				if(StringUtils.isNotBlank(user.getPhone())){
-					String codeStr = session.getAttribute(user.getPhone()).toString();
-					String[] resStr = codeStr.split("-");
-					long nowTime = new Date().getTime();
-					long validTime = Long.valueOf(resStr[0]);
-					if(nowTime-validTime<=300000){
-						if(resStr[1].equals(user.getCode())){
-							TUser model = userService.findUserByUserName(user.getUserName());
-							if(model != null){
-								res.put("code", 405);
-								res.put("msg", "用户名已存在");
-							}else{
-								model = userService.findUserByPhone(user.getPhone());
+					Object codeObj = session.getAttribute(user.getPhone());
+					if (codeObj!=null)
+					{
+						String[] resStr = codeObj.toString().split("-");
+						long nowTime = new Date().getTime();
+						long validTime = Long.valueOf(resStr[0]);
+						if(nowTime-validTime<=300000){
+							if(resStr[1].equals(user.getCode())){
+								TUser model = userService.findUserByUserName(user.getUserName());
 								if(model != null){
-									res.put("code", 406);
-									res.put("msg", "该手机号已存在");
+									res.put("code", 405);
+									res.put("msg", "用户名已存在");
 								}else{
-									userService.registerUser(user);
-									session.removeAttribute(user.getPhone());
-									res.put("code", 200);
-									res.put("msg", "success");
+									model = userService.findUserByPhone(user.getPhone());
+									if(model != null){
+										res.put("code", 406);
+										res.put("msg", "该手机号已存在");
+									}else{
+										userService.registerUser(user);
+										session.removeAttribute(user.getPhone());
+										res.put("code", 200);
+										res.put("msg", "success");
+									}
 								}
+							}else{
+								res.put("code", 402);
+								res.put("msg", "验证码错误");
 							}
 						}else{
-							res.put("code", 402);
-							res.put("msg", "验证码错误");
+							res.put("code", 401);
+							res.put("msg", "验证码超时，请重新获取验证码！");
 						}
 					}else{
-						res.put("code", 401);
-						res.put("msg", "验证码超时，请重新获取验证码！");
+						res.put("code", 402);
+						res.put("msg", "验证码错误");
 					}
 				}else{
 					res.put("code", 403);
@@ -119,7 +125,6 @@ public class RegisterController {
 			}else{
 				res.put("code", 403);
 				res.put("msg", "无效的参数");
-				
 			}
 		} catch (Exception e)
 		{

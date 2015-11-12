@@ -98,19 +98,36 @@ function addsec(){
 	}  
 } 
 function checkV(){
-	if($("#name").val().trim()=='' || !$("#name").val().match(/^[a-zA-Z][0-9a-zA-Z_]+$/)){
+	if($("#name").val().trim()==''){
 		$("#name").focus();
+		alert("请输入用户名");
+		return false;
+	}else if(!$("#name").val().match(/^[a-zA-Z][0-9a-zA-Z_]+$/)){
+		$("#name").focus();
+		alert("用户名格式不正确");
 		return false;
 	}
 	if($("#phone").val().trim()==''){
 		$("#phone").focus();
+		alert("请输入手机号");
 		return false;
 	}else if(!$("#phone").val().match(/^(((13[0-9]{1})|15[0-9]{1}|18[0-9]{1}|17[0-9]{1})+\d{8})$/)){
 		alert("手机号格式不正确");
 		$("#phone").focus();
+		return false;
+	}
+	if($("#code").val().trim()==''){
+		$("#code").focus();
+		alert("请输入验证码");
+		return false;
+	}else if($("#code").val().trim().length!=6 || !$("#code").val().trim().match(/^[0-9]{6}$/)){
+		$("#code").focus();
+		alert("验证码格式不正确");
+		return false;
 	}
 	if($("#fpwd").val().trim()==''){
 		$("#fpwd").focus();
+		alert("请输入密码");
 		return false;
 	}
 	if($("#fpwd").val().trim().length<6){
@@ -120,22 +137,22 @@ function checkV(){
 	}
 	if($("#repwd").val().trim()==''){
 		$("#repwd").focus();
+		alert("请输入确认密码");
 		return false;
 	}
 	if($("#repwd").val().trim()!=$("#fpwd").val().trim()){
 		$("#repwd").focus();
-		return false;
-	}
-	if($("#code").val().trim()=='' || $("#code").val().trim().length!=6){
-		$("#code").focus();
+		alert("密码与确认密码不一致");
 		return false;
 	}
 	if($("#ship_name").val().trim()==''){
 		$("#ship_name").focus();
+		alert("请输入船舶名称");
 		return false;
 	}
 	if($("#ship_no").val().trim()==''){
 		$("#ship_no").focus();
+		alert("请输入船舶编号");
 		return false;
 	}
 	
@@ -151,7 +168,9 @@ function register(){
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
-				if(data.code != 200){
+				if(data.code == 401 || data.code == 402 || data.code == 405 || data.code == 406){
+					alert(data.msg);
+				}else if(data.code != 200){
 					alert("服务繁忙，请稍后再试！");
 				}else{
 					location.href = "login";

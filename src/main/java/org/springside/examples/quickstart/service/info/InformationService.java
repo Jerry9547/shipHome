@@ -142,27 +142,10 @@ public class InformationService {
 					condition.setCity(new String(condition.getCity().getBytes("ISO8859-1"),"utf-8"));
 					filters.put("city", new SearchFilter("city", Operator.EQ, condition.getCity()));
 				}
-//				if (StringUtils.isNotBlank(condition.getPrice()))
-//				{
-//					if(condition.getPrice().equals("1")){
-//						filters.put("price", new SearchFilter("price", Operator.LTE, 3000));
-//					}else if(condition.getPrice().equals("2")){
-//						filters.put("price", new SearchFilter("price", Operator.GTE, 3000));
-//						filters.put("price", new SearchFilter("price", Operator.LTE, 5000));
-//					}else if(condition.getPrice().equals("3")){
-//						filters.put("price", new SearchFilter("price", Operator.GTE, 5000));
-//						filters.put("price", new SearchFilter("price", Operator.LTE, 10000));
-//					}else if(condition.getPrice().equals("4")){
-//						filters.put("price", new SearchFilter("price", Operator.GTE, 10000));
-//						filters.put("price", new SearchFilter("price", Operator.LTE, 30000));
-//					}else if(condition.getPrice().equals("5")){
-//						filters.put("price", new SearchFilter("price", Operator.GTE, 30000));
-//						filters.put("price", new SearchFilter("price", Operator.LTE, 100000));
-//					}else if(condition.getPrice().equals("6")){
-//						filters.put("price", new SearchFilter("price", Operator.GTE, 100000));
-//					}
-//					
-//				}
+				if (condition.getUserId() != null && condition.getUserId().intValue()>0)
+				{
+					filters.put("userId", new SearchFilter("userId", Operator.EQ, condition.getUserId().intValue()));
+				}
 			} catch (Exception e)
 			{
 				e.printStackTrace();

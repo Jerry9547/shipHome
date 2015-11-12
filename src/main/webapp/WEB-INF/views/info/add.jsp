@@ -207,9 +207,11 @@
                 $(this).addClass("current");
                 $("#ty_id").val($(this).data("id"));
                 $("#ty1").find("li").hide();
+                $("#ty1_id").val("");
                 $("#ty1 .tp_" + $(this).data("id")).show();
                 $("#ty1").slideUp().prevAll(".select-box").removeClass("current").text("请选择");
                 $("#ty2").find("li").hide();
+                $("#ty2_id").val("");
                 $("#ty2").slideUp().prevAll(".select-box").removeClass("current").text("请选择");
             });
             $(".choice-list li").on("click",function(){

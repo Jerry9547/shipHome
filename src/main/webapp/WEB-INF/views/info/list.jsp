@@ -11,6 +11,7 @@
 <c:set var="delim" value=","/> 
 <c:set var="priceArr" value="${fc:split(parrayvalue, delim)}"/>
 <c:set var="iacArr" value="${fc:split(iacarrvalue, delim)}"/>
+<input type="hidden" id="userId" name="userId" value="${info.userId }" />
 	<div class="subhead-bd bg_theme">
         <div class="control">
             <div class="search-box">
@@ -21,7 +22,12 @@
         </div>
         <div class="nav">
         	<input type="hidden" name="infoType.id" value="<c:if test="${empty info.infoType }">0</c:if><c:if test="${not empty info.infoType }">${info.infoType.id }</c:if>" id="ty_id"/>
-            <ul class="clear">
+            <c:if test="${not empty info.userId and info.userId>0}">
+            <ul class="clear" style="display: inline-block;float: left;left: 172px;position: absolute;">
+                <li><a href="javascript:void(0);" class="active" >我的资讯</a></li>
+            </ul>
+            </c:if>
+            <ul class="clear" style="display:inline;">
                 <li><a href="javascript:void(0);" class="<c:if test="${empty info.infoType or info.infoType.id==0 }">active</c:if> tag_it" data-it="0">全部资讯</a></li>
                 <li><a href="javascript:void(0);" class="<c:if test="${not empty info.infoType and info.infoType.id==1 }">active</c:if> tag_it" data-it="1">大宗商品</a></li>
                 <li><a href="javascript:void(0);" class="<c:if test="${not empty info.infoType and info.infoType.id==2 }">active</c:if> tag_it" data-it="2">船舶服务</a></li>
@@ -272,7 +278,7 @@
     	
     	$(".tag_it").click(function(){
     		$("#ty_id").val($(this).data("it"));
-    		location.href = "${ctx}/info/list?infoType.id="+$(this).data("it");
+    		location.href = "${ctx}/info/list?infoType.id="+$(this).data("it")+"&userId=${info.userId}";
     	});
     	$("._serach").click(function(){
     		var condi = $("#search").val();
@@ -283,14 +289,14 @@
     			var price = $("#price").val();
     			var iac = $("#iac_id").val();
     			var city = $("#city").val();
-    			location.href="${ctx}/info/list?infoType.id="+type+"&infoTypeOne.id="+type1+"&infoTypeTwo.id="+type2+"&title="+condi+"&sprice="+price+"&city="+city+"&infoAction.id="+iac;
+    			location.href="${ctx}/info/list?infoType.id="+type+"&infoTypeOne.id="+type1+"&infoTypeTwo.id="+type2+"&title="+condi+"&sprice="+price+"&city="+city+"&infoAction.id="+iac+"&userId=${info.userId}";
     		//}
     	});
     	$(".paging").createPage({
     		pageCount:"${totalPage}",
     		current:"${currPage}",
     		backFn:function(p){
-				location.href="${ctx}/info/list?infoType.id=${info.infoType.id}&infoTypeOne.id=${info.infoTypeOne.id}&infoTypeTwo.id=${info.infoTypeTwo.id}&title=${info.title}&sprice=${info.sprice}&city=${info.city}&infoAction.id=${info.infoAction.id}&p="+p;
+				location.href="${ctx}/info/list?infoType.id=${info.infoType.id}&infoTypeOne.id=${info.infoTypeOne.id}&infoTypeTwo.id=${info.infoTypeTwo.id}&title=${info.title}&sprice=${info.sprice}&city=${info.city}&infoAction.id=${info.infoAction.id}&userId=${info.userId}&p="+p;
     		}
     	});
     	

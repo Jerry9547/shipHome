@@ -11,7 +11,11 @@
                 <div class="swiper-container banner-focus">
                     <div class="swiper-wrapper">
                     <c:forEach items="${advertList}" var="advert">
-                        <div class="swiper-slide"> <img src="${advert.purl }"> </div>
+                        <div class="swiper-slide"> 
+	                        <a href="${advert.url }" target="_blank">
+	                        <img src="${advert.purl }" style="width: 100%;border:0;"> 
+	                        </a>
+                        </div>
                     </c:forEach>
                         <%-- <div class="swiper-slide"> <img src="${ctx}/static/images/photo/banner.jpg"> </div>
                         <div class="swiper-slide"> <img src="${ctx}/static/images/photo/banner.jpg"> </div> --%>
@@ -31,7 +35,7 @@
                             <div class="swiper-wrapper">
 	                            <%-- <c:forEach items="${infoList }" var="info" varStatus="status">
 		                            <c:if test="${status.index<3 and not empty info.photo }"> --%>
-		                                <div class="swiper-slide"> <img src="${infoList[0].photoArr[0]}" onerror="javascript:this.src='${ctx}/static/images/photo/index-middle.jpg';" > <div class="title"><p class="ellipsis">${infoList[0].title }</p></div></div>
+		                                <div class="swiper-slide"><a href="${ctx}/info/detail/${infoList[0].id}" target="_blank"><img src="${infoList[0].photoArr[0]}" onerror="javascript:this.src='${ctx}/static/images/photo/index-middle.jpg';" > <div class="title"><p class="ellipsis">${infoList[0].title }</p></div></a></div>
 		                            <%-- </c:if>
 		                            <c:if test="${status.index<3 and empty info.photo}">
 		                                <div class="swiper-slide"> <img src="${ctx}/static/images/photo/index-middle.jpg"> <div class="title"><p class="ellipsis">${info.title }</p></div></div>
@@ -44,12 +48,12 @@
                     </div>
                 </div>
                 <div class="right">
-                    <h3><span>${infoList[0].title }</span> <a class="btn-look" href="${ctx}/info/detail/${infoList[0].id}">查看详情</a></h3>
+                    <h3><span>${infoList[0].title }</span> <a class="btn-look" href="${ctx}/info/detail/${infoList[0].id}" target="_blank">查看详情</a></h3>
                     <ul class="list">
                     <c:forEach items="${infoList }" var="info" varStatus="i">
                     	<c:if test="${i.index>0 }">
                         <li>
-                            <a href="${ctx}/info/detail/${info.id}">
+                            <a href="${ctx}/info/detail/${info.id}" target="_blank">
                                 <p class="ellipsis">${info.title }</p>
                                 <span class="c_999">${fn:timeFormat(info.createTime) }</span>
                             </a>
@@ -87,12 +91,14 @@
                     <c:forEach items="${infoList }" var="info" varStatus="i">
 	                    <c:if test="${i.index>1 and i.index<6 }">
                         <li>
+                        	<a href="${ctx}/info/detail/${info.id}" target="_blank">
                             <img src="${info.photoArr[0]}" width="" onerror="javascript:this.src='${ctx}/static/images/photo/index-b-item.jpg';" alt=""/>
                             <div class="more">
                                 <div >
                                     <p class="wrap">${ info.descri }</p>
                                 </div>
                             </div>
+                        	</a>
                         </li>
 	                    </c:if>
                     </c:forEach>
@@ -121,7 +127,9 @@
                     </ul>
                 </div>
                 <div class="right">
+                	<a href="${ctx}/info/detail/${infoList[1].id}" target="_blank">
                     <img src="${infoList[1].photoArr[0] }" style="width:480px;height:354px;" onerror="javascript:this.src='${ctx}/static/images/photo/index-b.jpg';" alt=""/>
+                	</a>
                 </div>
             </div>
         </div>

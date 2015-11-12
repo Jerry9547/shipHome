@@ -24,15 +24,26 @@
     </form>
 </div>
 <script type="text/javascript">
+$(function(){
+	$("#code").keyup(function(){
+		var _this = $(this);
+		var _inputVal = _this.val().trim();
+		if($.isNumeric($(this).val())){
+			$(this).val(parseInt($(this).val()));
+		}
+	});
+});
 function sendValidationCode(obj){
 	var _phone = $("#phone").val();
 	var _obj = $(obj);
 	if(_phone.trim()==''){
 		alert("请输入手机号");
 		$("#phone").focus();
+		return false;
 	}else if(!_phone.match(/^(((13[0-9]{1})|15[0-9]{1}|18[0-9]{1}|17[0-9]{1})+\d{8})$/)){
 		alert("手机号格式不正确");
 		$("#phone").focus();
+		return false;
 	}else if(_obj.attr("opt")==0){
 		_obj.attr("opt",1);
 		$.ajax( {
@@ -67,22 +78,30 @@ function addsec(){
 function checkV(){
 	if($("#phone").val().trim()==''){
 		$("#phone").focus();
+		alert("请输入手机号");
 		return false;
 	}else if(!$("#phone").val().match(/^(((13[0-9]{1})|15[0-9]{1}|18[0-9]{1}|17[0-9]{1})+\d{8})$/)){
 		alert("手机号格式不正确");
 		$("#phone").focus();
+		return false;
+	}
+	if($("#code").val().trim()==''){
+		$("#code").focus();
+		alert("请输入验证码");
+		return false;
+	}else if($("#code").val().trim().length!=6 || !$("#code").val().trim().match(/^[0-9]{6}$/)){
+		$("#code").focus();
+		alert("验证码格式不正确");
+		return false;
 	}
 	if($("#pwd").val().trim()==''){
 		$("#pwd").focus();
+		alert("请输入密码");
 		return false;
 	}
 	if($("#pwd").val().trim().length<6){
 		alert("密码要长于6位");
 		$("#pwd").focus();
-		return false;
-	}
-	if($("#code").val().trim()=='' || $("#code").val().trim().length!=6){
-		$("#code").focus();
 		return false;
 	}
 	return true;
@@ -97,7 +116,9 @@ function profile(){
 			dataType : 'json',
 			success : function(data) {
 				console.log(data);
-				if(data.code != 200){
+				if(data.code == 401 || data.code == 402 || data.code == 406){
+					alert(data.msg);
+				}else if(data.code != 200){
 					alert("服务繁忙，请稍后再试！");
 				}else{
 					location.href = "login";
