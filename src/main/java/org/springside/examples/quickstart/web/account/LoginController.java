@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.examples.quickstart.entity.TUser;
 import org.springside.examples.quickstart.service.account.UserService;
+import org.springside.examples.quickstart.utils.CookieUtils;
+import org.springside.examples.quickstart.utils.EncryptionUtil;
 
 /**
  * 登陆
@@ -39,14 +41,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "loginout", method = RequestMethod.GET)
-	public String loginOut(HttpSession session) {
+	public String loginOut(HttpSession session, HttpServletResponse response) {
 		session.removeAttribute("user");
+		CookieUtils.addCookie(response, "user_token", null , 0);
 		return "redirect:/index";
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "loginToken" , method = RequestMethod.POST)
-	public void loginToken(TUser user, HttpSession session,HttpServletResponse response){
+	public void loginToken(TUser user, HttpSession session, HttpServletResponse response){
 		PrintWriter writer = null;
 		JSONObject res = new JSONObject();
 		try
@@ -56,7 +59,8 @@ public class LoginController {
 				if(StringUtils.isNotBlank(user.getUserName())){
 					TUser model = userService.findUserByAccount(user.getUserName());
 					if(model!=null && model.getPwd().equalsIgnoreCase(user.getPwd())){
-						session.setAttribute("user", model);
+						session.setAttribute("user", model);	//设置session
+						CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
 						res.put("code", 200);
 						res.put("msg", "success");
 					}else{

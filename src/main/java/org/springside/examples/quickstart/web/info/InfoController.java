@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,11 +32,14 @@ import org.springside.examples.quickstart.entity.InfoTypeOne;
 import org.springside.examples.quickstart.entity.InfoTypeTwo;
 import org.springside.examples.quickstart.entity.Information;
 import org.springside.examples.quickstart.entity.TUser;
+import org.springside.examples.quickstart.service.account.UserService;
 import org.springside.examples.quickstart.service.info.CityService;
 import org.springside.examples.quickstart.service.info.InfoTypeOneService;
 import org.springside.examples.quickstart.service.info.InfoTypeService;
 import org.springside.examples.quickstart.service.info.InfoTypeTwoService;
 import org.springside.examples.quickstart.service.info.InformationService;
+import org.springside.examples.quickstart.utils.CookieUtils;
+import org.springside.examples.quickstart.utils.EncryptionUtil;
 import org.springside.examples.quickstart.utils.ImageUtils;
 import org.springside.modules.web.Servlets;
 
@@ -53,6 +57,8 @@ public class InfoController {
 	private InfoTypeTwoService infoTypeTwoService;
 	@Autowired
 	private CityService cityService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="detail/{id}", method = RequestMethod.GET)
 	public String detail(@PathVariable("id") Long id, Model model) {
@@ -112,9 +118,19 @@ public class InfoController {
 	}
 	
 	@RequestMapping(value="add", method = RequestMethod.GET)
-	public String add(HttpSession session, Model model) {
+	public String add(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) {
 		TUser user = (TUser)session.getAttribute("user");
-		if(user == null){
+		Cookie token = CookieUtils.getCookieByName(request, "user_token");
+		if(user == null && token != null && token.getValue()!=null){
+			String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
+			user = userService.findUserByAccount(strings[0]);
+			if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
+				session.setAttribute("user", user);
+			}
+		}else if(user != null && token == null){
+			CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
+		}
+		if(user == null && (token == null || token.getValue()==null)){
 			return "redirect:/login";
 		}else{
 			List<InfoTypeOne> typeOneList = infoTypeOneService.findAll();
@@ -170,10 +186,21 @@ public class InfoController {
 	}
 	
 	@RequestMapping(value="update/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable("id")Long id, HttpSession session, Model model) {
+	public String edit(@PathVariable("id")Long id, HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) {
 		try
 		{
 			TUser user = (TUser) session.getAttribute("user");
+			Cookie token = CookieUtils.getCookieByName(request, "user_token");
+			if(user == null && token != null && token.getValue()!=null){
+				String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
+				user = userService.findUserByAccount(strings[0]);
+				if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
+					session.setAttribute("user", user);
+				}
+			}else if(user != null && token == null){
+				CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
+			}
+			
 			if (user == null)
 			{
 				return "redirect:/login";
