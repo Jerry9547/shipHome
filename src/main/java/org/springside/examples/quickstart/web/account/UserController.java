@@ -45,16 +45,16 @@ public class UserController {
 //		TUser user = userService.findUserById(id);
 //		model.addAttribute("userInfo", user);
 		
-		Cookie token = CookieUtils.getCookieByName(request, "user_token");
-		if(user == null && token != null && token.getValue()!=null){
-			String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
-			user = userService.findUserByAccount(strings[0]);
-			if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
-				session.setAttribute("user", user);
-			}
-		}else if(user != null && token == null){
-			CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
-		}
+//		Cookie token = CookieUtils.getCookieByName(request, "user_token");
+//		if(user == null && token != null && token.getValue()!=null){
+//			String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
+//			user = userService.findUserByAccount(strings[0]);
+//			if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
+//				session.setAttribute("user", user);
+//			}
+//		}else if(user != null && token == null){
+//			CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
+//		}
 		if(user == null){
 			return "redirect:/login";
 		}else{

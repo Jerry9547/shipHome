@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,8 +74,20 @@ public class InfoController {
 	}
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
-	public String list(Information info, Model model, ServletRequest request) {
+	public String list(Information info, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 //		Page<Information> page = informationService.findByPage(p==null?0:p.intValue());
+//		TUser user = (TUser)session.getAttribute("user");
+//		Cookie token = CookieUtils.getCookieByName(request, "user_token");
+//		if(user == null && token != null && token.getValue()!=null){
+//			String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
+//			user = userService.findUserByAccount(strings[0]);
+//			if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
+//				session.setAttribute("user", user);
+//			}
+//		}else if(user != null && token == null){
+//			CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
+//		}
+		
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Page<Information> page = informationService.findByCondition(info, searchParams, info==null||info.getP()==null ?0:info.getP().intValue()-1);
 		List<InfoTypeOne> typeOneList = infoTypeOneService.findAll();
@@ -120,17 +131,17 @@ public class InfoController {
 	@RequestMapping(value="add", method = RequestMethod.GET)
 	public String add(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) {
 		TUser user = (TUser)session.getAttribute("user");
-		Cookie token = CookieUtils.getCookieByName(request, "user_token");
-		if(user == null && token != null && token.getValue()!=null){
-			String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
-			user = userService.findUserByAccount(strings[0]);
-			if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
-				session.setAttribute("user", user);
-			}
-		}else if(user != null && token == null){
-			CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
-		}
-		if(user == null && (token == null || token.getValue()==null)){
+//		Cookie token = CookieUtils.getCookieByName(request, "user_token");
+//		if(user == null && token != null && token.getValue()!=null){
+//			String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
+//			user = userService.findUserByAccount(strings[0]);
+//			if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
+//				session.setAttribute("user", user);
+//			}
+//		}else if(user != null && token == null){
+//			CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
+//		}
+		if(user == null){
 			return "redirect:/login";
 		}else{
 			List<InfoTypeOne> typeOneList = infoTypeOneService.findAll();
@@ -190,16 +201,16 @@ public class InfoController {
 		try
 		{
 			TUser user = (TUser) session.getAttribute("user");
-			Cookie token = CookieUtils.getCookieByName(request, "user_token");
-			if(user == null && token != null && token.getValue()!=null){
-				String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
-				user = userService.findUserByAccount(strings[0]);
-				if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
-					session.setAttribute("user", user);
-				}
-			}else if(user != null && token == null){
-				CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
-			}
+//			Cookie token = CookieUtils.getCookieByName(request, "user_token");
+//			if(user == null && token != null && token.getValue()!=null){
+//				String[] strings = EncryptionUtil.getInstance().getDesString(token.getValue()).split("@&@");
+//				user = userService.findUserByAccount(strings[0]);
+//				if(user!=null && user.getPwd().equalsIgnoreCase(strings[1])){
+//					session.setAttribute("user", user);
+//				}
+//			}else if(user != null && token == null){
+//				CookieUtils.addCookie(response, "user_token", EncryptionUtil.getInstance().getEncString(user.getUserName()+"@&@"+user.getPwd()) , 10 * 60 * 60);
+//			}
 			
 			if (user == null)
 			{
